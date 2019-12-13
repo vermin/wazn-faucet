@@ -1,16 +1,19 @@
-# Monero faucet
-The monero faucet can be used as `stagenet` faucet or as `testnet` faucet.
-A faucet in general accepts a monero wallet address and returns a fraction of its own wallet's balance to the given wallet.
+WAZN Faucet
+======================
+
+[![License](https://img.shields.io/badge/license-EUPL--1.2-red)](https://opensource.org/licenses/EUPL-1.2)
+
+The WAZN faucet can be used as `mainnet`, `stagenet` or as `testnet` faucet.
+A faucet in general accepts a WAZN or Monero wallet address and returns a fraction of its own wallet's balance to the given wallet.
 
 Running faucets based on this project can be found at
-* [stagenet](https://community.xmr.to/faucet/stagenet)
-* [testnet](https://community.xmr.to/faucet/testnet)
+* [WAZN mainet](https://free.wazn.io)
 
-Visit us at https://community.xmr.to.
+Visit us at [wazn.io](https://wazn.io).
 
 ## Getting Started
 
-These instructions will get you a copy of the faucet up and running on your local machine for development and testing purposes. 
+These instructions will get you a copy of the faucet up and running on your local machine for development and testing purposes.
 
 See deployment for notes on how to deploy the project on a live system.
 
@@ -87,14 +90,14 @@ Modify `monero-rpc` service in `docker-compose.yml`.
   - verbosity level of `monero-wallet-rpc` log messages
 * **stagenet**
   - `--stagenet`
-  - `--wallet-file <stagenet_wallet>` 
+  - `--wallet-file <stagenet_wallet>`
   - `--password-file <stagenet_wallet_password_file>`
   - Adapt the path to your monero **stagenet** wallet `<stagenet_wallet>`.
   - `DAEMON_PORT=38081` (or whatever port your daemon is listening to)
   - `wallet_port=38083` (or whatever port yout RPC should be listening on)
 * **testnet**
   - `--testnet`
-  - `--wallet-file <testnet_wallet>` 
+  - `--wallet-file <testnet_wallet>`
   - `--password-file <testnet_wallet_password_file>`
   - Adapt the path to your monero **testnet** wallet `<testnet_wallet>`.
   - `DAEMON_PORT=28081` (or whatever port your daemon is listening to)
@@ -183,7 +186,7 @@ The source code is formatted using `black --line-length 79`.
 
 ## Deployment
 
-For the deployment we recommend using `alpine` as docker base image. 
+For the deployment we recommend using `alpine` as docker base image.
 `prod.Dockerfile` makes use of this - Locally such an environment can be started with `docker-compose-prod.yml` as docker-compose configuration file.
 
 ```bash
@@ -285,22 +288,13 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/xmrto/faucet/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/xmrto/faucet/tags).
 
 ## Authors
 
 * **Norman Moeschter-Schenck** - *Initial work* - [normoes](https://github.com/normoes)
 
 See also the list of [contributors](contributors.md) who participated in this project.
-
-## License
-
-This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details
-
-## Acknowledgments
-
-* [Monero project](https://github.com/monero-project/monero)
-* [XMR.to](https://xmr.to)
 
 
 ## Troubleshooting
@@ -315,4 +309,11 @@ Then, the `faucet` container will not start successfully.
     pipenv shell
     # run makemigrations manually
     python manage.py makemigrations  # interactive
+```
+
+## License
+```
+Licensed under the EUPL-1.2
+Copyright (c) 2019 WAZN Project  
+Copyright (c) 2018-2019 XMRto 
 ```
