@@ -3,3 +3,5 @@
 **Luis Alvarez** - [lalvarezguillen](https://github.com/lalvarezguillen/)
 
 **Gonçalo Valério** - [dethos](https://github.com/dethos/)
+
+**vermin** - [vermin](https://github.com/vermin/)

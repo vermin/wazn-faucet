@@ -13,32 +13,32 @@ logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-# For converting from float to XMR notation
-PICO_XMR = Decimal("0.000000000001")
+# For converting from float to WAZN notation
+MICRO_WAZN = Decimal("0.000001")
 
 
-def xmr_to_float(value):
-    """Converts an integer value in the XMR format to a float.
+def wazn_to_float(value):
+    """Converts an integer value in the WAZN format to a float.
 
-    The float format has a maxium of 12 decimal digits.
+    The float format has a maxium of 6 decimal digits.
 
-    :param value: value to convert from XMR notation to float
+    :param value: value to convert from WAZN notation to float
     :returns: converted value in float
     """
 
-    return (Decimal(value) * PICO_XMR).quantize(PICO_XMR)
+    return (Decimal(value) * MICRO_WAZN).quantize(MICRO_WAZN)
 
 
-def float_to_xmr(value):
-    """Converts a float value to an integer in the XMR notation.
+def float_to_wazn(value):
+    """Converts a float value to an integer in the WAZN notation.
 
-    The float format has a maxium of 12 decimal digits.
+    The float format has a maxium of 6 decimal digits.
 
-    :param value: value to convert from float to XMR notation
-    :returns: converted value in XMR notation
+    :param value: value to convert from float to WAZN notation
+    :returns: converted value in WAZN notation
     """
 
-    return int(Decimal(value) / PICO_XMR)
+    return int(Decimal(value) / MICRO_WAZN)
 
 
 def generate_xmr_payment_id_long():

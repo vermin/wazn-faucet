@@ -23,12 +23,12 @@ env = environ.Env(
     MAXIMUM_PAYOUT=(int, 1),
     PROTOCOL=(str, "http://"),
     WALLET_HOST=(str, "localhost"),
-    WALLET_PORT=(int, 38083),
+    WALLET_PORT=(int, 11789),
     ONCE_EVERY_N_MINUTE=(int, 5),
-    MONERO_ENDPOINT=(str, "/"),
+    WAZN_ENDPOINT=(str, "/"),
     DEFAULT_MIXIN=(str, "10"),
     DAEMON_HOST=(str, "localhost"),
-    DAEMON_PORT=(int, 38081),
+    DAEMON_PORT=(int, 11787),
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -37,9 +37,9 @@ DEBUG = env("DEBUG")
 MAXIMUM_PAYOUT = env("MAXIMUM_PAYOUT")
 
 DEFAULT_MIXIN = env("DEFAULT_MIXIN")
-MONERO_ENDPOINT = env("MONERO_ENDPOINT")
-if not MONERO_ENDPOINT:
-    MONERO_ENDPOINT = "/"
+WAZN_ENDPOINT = env("WAZN_ENDPOINT")
+if not WAZN_ENDPOINT:
+    WAZN_ENDPOINT = "/"
 FACTOR_BALANCE = env("FACTOR_BALANCE")
 PROTOCOL = env("PROTOCOL")
 WALLET_HOST = env("WALLET_HOST")
@@ -154,7 +154,7 @@ USE_TZ = True
 STATIC_ROOT = "/data/static/"
 # Where the originals are
 # injected into index.html
-STATIC_URL = MONERO_ENDPOINT + "static/"
+STATIC_URL = WAZN_ENDPOINT + "static/"
 
 LOGGING = {
     "version": 1,

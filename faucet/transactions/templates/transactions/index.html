@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="refresh" content="60">
-  {% if monero_network %}
+  {% if wazn_network %}
   <div class="cr cr-top cr-left cr-sticky cr-green">
-    <title>Monero {{ monero_network|safe }} faucet</title>
+    <title>Monero {{ wazn_network|safe }} faucet</title>
   </div>
   {% endif %}
   <script type="text/javascript" src="https://code.jquery.com/jquery.js"></script>
@@ -28,12 +28,12 @@
   </noscript>
   <div class="layout">
     <div class="layout__header">
-      {% if monero_network %}
-      <h1 class="centered header">Monero {{ monero_network|safe }} faucet</h1>
+      {% if wazn_network %}
+      <h1 class="centered header">Monero {{ wazn_network|safe }} faucet</h1>
       {% endif %}
-      {% if monero_network %}  
+      {% if wazn_network %}
         <div class="centered footer__link">
-          <a href="https://community.xmr.to/faucet/{{ monero_network_other|safe }}/" target="_blank">Go to {{ monero_network_other|safe }} faucet</a>
+          <a href="https://community.xmr.to/faucet/{{ wazn_network_other|safe }}/" target="_blank">Go to {{ wazn_network_other|safe }} faucet</a>
         </div>
       {% endif %}
     </div>

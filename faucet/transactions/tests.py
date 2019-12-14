@@ -140,49 +140,49 @@ class TransactionsApiViewTests(TestCase):
         )
         self.assertEqual(response.status_code, 400)
 
-    def test_float_to_xmr(self):
-        """A float should be converted to the correct xmr notation.
+    def test_float_to_wazn(self):
+        """A float should be converted to the correct WAZN notation.
         """
 
         float_value = 12
-        xmr_notation = tools.float_to_xmr(float_value)
-        self.assertEqual(xmr_notation, 12000000000000)
+        xmr_notation = tools.float_to_wazn(float_value)
+        self.assertEqual(xmr_notation, 12000000)
 
         float_value = "4.76"
-        xmr_notation = tools.float_to_xmr(float_value)
-        self.assertEqual(xmr_notation, 4760000000000)
+        xmr_notation = tools.float_to_wazn(float_value)
+        self.assertEqual(xmr_notation, 4760000)
 
         float_value = "0.08"
-        xmr_notation = tools.float_to_xmr(float_value)
-        self.assertEqual(xmr_notation, 80000000000)
+        xmr_notation = tools.float_to_wazn(float_value)
+        self.assertEqual(xmr_notation, 80000)
 
-    def test_xmr_to_float(self):
-        """A value in xmr notation should be converted into the float value.
+    def test_wazn_to_float(self):
+        """A value in WAZN notation should be converted into the float value.
         """
 
-        float_value = Decimal(12000000000000)
-        xmr_notation = tools.xmr_to_float(float_value)
+        float_value = Decimal(12000000)
+        xmr_notation = tools.wazn_to_float(float_value)
         self.assertEqual(xmr_notation, 12)
 
-        xmr_notation = 4760000000000
-        float_value = tools.xmr_to_float(xmr_notation)
-        self.assertEqual(float_value, Decimal("4.76").quantize(tools.PICO_XMR))
+        xmr_notation = 4760000
+        float_value = tools.wazn_to_float(xmr_notation)
+        self.assertEqual(float_value, Decimal("4.76").quantize(tools.MICRO_WAZN))
 
-        xmr_notation = 80000000000
-        float_value = tools.xmr_to_float(xmr_notation)
-        self.assertEqual(float_value, Decimal("0.08").quantize(tools.PICO_XMR))
+        xmr_notation = 80000
+        float_value = tools.wazn_to_float(xmr_notation)
+        self.assertEqual(float_value, Decimal("0.08").quantize(tools.MICRO_WAZN))
 
-    def test_xmr_to_float_interchangeable(self):
+    def test_wazn_to_float_interchangeable(self):
         """Xmr notation and float should be interchangeable.
         """
 
         xmr_notation = 80000000000
-        float_value = tools.xmr_to_float(xmr_notation)
-        self.assertEqual(tools.float_to_xmr(float_value), xmr_notation)
+        float_value = tools.wazn_to_float(xmr_notation)
+        self.assertEqual(tools.float_to_wazn(float_value), xmr_notation)
 
-        float_value = Decimal("4.76").quantize(tools.PICO_XMR)
-        xmr_notation = tools.float_to_xmr(float_value)
-        self.assertEqual(tools.xmr_to_float(xmr_notation), float_value)
+        float_value = Decimal("4.76").quantize(tools.MICRO_WAZN)
+        xmr_notation = tools.float_to_wazn(float_value)
+        self.assertEqual(tools.wazn_to_float(xmr_notation), float_value)
 
 
 class TransactionsApiViewTests_Api(APITestCase):
@@ -213,7 +213,7 @@ class TransactionsApiViewTests_Api(APITestCase):
         )
         mocked_transaction["amount"] = min(
             settings.MAXIMUM_PAYOUT,
-            tools.xmr_to_float(
+            tools.wazn_to_float(
                 mocked_get_balance() // settings.FACTOR_BALANCE
             ),
         )
@@ -313,7 +313,7 @@ class TransactionsApiViewTests_Api(APITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             response.json().get("balance"),
-            int(tools.xmr_to_float(mocked_get_balance())),
+            int(tools.wazn_to_float(mocked_get_balance())),
         )
 
     @mock.patch.object(WalletRPC, "get_balance", mocked_get_balance)

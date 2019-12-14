@@ -60,7 +60,7 @@ In `docker-compose.yml` you will find some settings, you should be familiar with
     + Should be set to `False` in production
   - `SECRET_KEY` (**default**: `<some_secret_key>`)
     + This value should be changed to something sensible in production.
-  - `MONERO_ENDPOINT` (**default**: `/`)
+  - `WAZN_ENDPOINT` (**default**: `/`)
     + Is only changed when several faucets are served by one single proxy server (like nginx).
     + See deployment for further information.
   - `CACHE_URL` (**default**: `locmemcache://`)
@@ -214,27 +214,27 @@ This requires to differentiate
 * static content requests
 between the two faucets.
 
-Therefore `MONERO_ENDPOINT` was introduced. This setting defines a URL prefix, that is used when the client talks to the backend.
+Therefore `WAZN_ENDPOINT` was introduced. This setting defines a URL prefix, that is used when the client talks to the backend.
 
-`MONERO_ENDPOINT` modifies the following settings:
+`WAZN_ENDPOINT` modifies the following settings:
 * URL to static content in `index.html`
 * URL to `transactions/` API endpoint in `index.html`
 by modifiying `STATIC_URL` in `settings.py`.
 
-`MONERO_ENDPOINT` should be the same as the appropriate location block in the nginx configuration.
-Within the nginx location block the prefixed URL should be stripped of `MONERO_ENDPOINT` again, since `uWSGI` is configured to just serve static contents
+`WAZN_ENDPOINT` should be the same as the appropriate location block in the nginx configuration.
+Within the nginx location block the prefixed URL should be stripped of `WAZN_ENDPOINT` again, since `uWSGI` is configured to just serve static contents
 
 #### Example
-* With `MONERO_ENDPOINT=/` `STATIC_URL` becomes `/static/`
+* With `WAZN_ENDPOINT=/` `STATIC_URL` becomes `/static/`
   - `index.html`
     + `/transactions/`
     + `/static/fonts/fonts.css`
-* With `MONERO_ENDPOINT=/faucet/stagenet/` `STATIC_URL` becomes `/faucet/stagenet/static/`
+* With `WAZN_ENDPOINT=/faucet/stagenet/` `STATIC_URL` becomes `/faucet/stagenet/static/`
   - `index.html`
     + `/faucet/stagenet/transactions/`
     + `/faucet/stagenet/static/fonts/fonts.css`
     + `...`
-* With `MONERO_ENDPOINT=/faucet/testnet/` `STATIC_URL` becomes `/faucet/testnet/static/`
+* With `WAZN_ENDPOINT=/faucet/testnet/` `STATIC_URL` becomes `/faucet/testnet/static/`
   - `index.html`
     + `/faucet/testnet/transactions/`
     + `/faucet/testnet/static/fonts/fonts.css`
@@ -315,5 +315,5 @@ Then, the `faucet` container will not start successfully.
 ```
 Licensed under the EUPL-1.2
 Copyright (c) 2019 WAZN Project  
-Copyright (c) 2018-2019 XMRto 
+Copyright (c) 2018-2019 XMRto
 ```

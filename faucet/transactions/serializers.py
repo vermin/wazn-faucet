@@ -78,4 +78,4 @@ class TransactionSerializer(serializers.ModelSerializer):
             raise MakeTransactionError(str(e))
 
     def get_amount(self, obj):
-        return tools.xmr_to_float(obj.amount)
+        return tools.wazn_to_float(obj.amount)

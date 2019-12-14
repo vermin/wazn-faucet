@@ -13,9 +13,9 @@ logger.setLevel(logging.DEBUG)
 
 
 class WalletRPC:
-    """Interface to monero-wallet-rpc.
+    """Interface to wazn-wallet-rpc.
 
-    Uses on python-monerorpc as backend.
+    Uses on python-waznrpc as backend.
     """
 
     network_type = None
@@ -24,7 +24,7 @@ class WalletRPC:
     def get_balance():
         """Returns the current balance of the wallet.
 
-        :returns: unlocked_balance if successful in XMR format
+        :returns: unlocked_balance if successful in WAZN format
         :raises RpcConnectionError: no connection could be established
         :raises ValueError: retrieved data could not be processed
         """
@@ -92,8 +92,8 @@ class WalletRPC:
     def make_transaction(destination_address, amount):
         """Makes a transaction to the given address.
 
-        :param destination_address: the wallet address to send XMR to
-        :param amount: the amount of XMR to send
+        :param destination_address: the wallet address to send WAZN to
+        :param amount: the amount of WAZN to send
         :returns: the complete transaction object including user's IP address
         :raises RpcConnectionError: in case of a connection error to the rpc
         :raises ValueError: in case  the JSON returned is bad
@@ -147,7 +147,7 @@ class WalletRPC:
 
     @classmethod
     def get_network_type(cls):
-        """Returns the monero network type the faucet is running on.
+        """Returns the WAZN network type the faucet is running on.
 
         :returns: network type (stagenet, testnet)
         :raises RpcConnectionError: no connection could be established
@@ -192,14 +192,14 @@ def get_current_amount(factor):
     is capped at settings.MAXIMUM_PAYOUT.
 
     :param factor: the factor to consider when paying out XMR
-    :returns: the XMR to pay out (factored unlocked_balance)
+    :returns: the WAZN to pay out (factored unlocked_balance)
     """
     balance = get_balance()
     if factor <= 0:
         logger.error("Wrong factor provided: " + str(factor))
         raise GetAmountError("FACTOR=" + str(factor))
     payout = min(
-        tools.float_to_xmr(settings.MAXIMUM_PAYOUT), balance // factor
+        tools.float_to_wazn(settings.MAXIMUM_PAYOUT), balance // factor
     )
     logger.info("Paying: {}".format(payout))
     return payout

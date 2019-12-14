@@ -23,12 +23,12 @@ logger.setLevel(logging.DEBUG)
 def index(request):
     """Render index.html template
 
-    Configure text with monero network mode.
-    Configure transaction endpoint with MONERO_ENDPOINT.
+    Configure text with WAZN network mode.
+    Configure transaction endpoint with WAZN_ENDPOINT.
     """
 
     network_type = WalletRPC.get_network_type()
-    network_type_other = ""
+    network_type_other = "mainnet"
     if network_type == "stagenet":
         network_type_other = "testnet"
     elif network_type == "testnet":
@@ -39,9 +39,9 @@ def index(request):
         "transactions/index.html",
         {
             "wallet_address": WalletRPC.get_address(),
-            "monero_network": network_type,
-            "monero_network_other": network_type_other,
-            "endpoint": settings.MONERO_ENDPOINT,
+            "wazn_network": network_type,
+            "wazn_network_other": network_type_other,
+            "endpoint": settings.WAZN_ENDPOINT,
         },
     )
 
@@ -70,7 +70,7 @@ class TransactionsApiView(RatelimitMixin, CreateAPIView):
     """Transactions APIView providing GET and POST.
 
     GET: Get current balance of wallet.
-    POST: Make a transaction to given XMR wallet address.
+    POST: Make a transaction to given WAZN wallet address.
     Always returns repsonse in JSON.
     """
 
@@ -88,7 +88,7 @@ class TransactionsApiView(RatelimitMixin, CreateAPIView):
     def get(self, request, format=None):
         """Returns the current balance of the wallet.
         """
-        return Response({"balance": int(tools.xmr_to_float(get_balance()))})
+        return Response({"balance": int(tools.wazn_to_float(get_balance()))})
 
     def perform_create(self, serializer):
         ip_address = get_client_ip(self.request)
