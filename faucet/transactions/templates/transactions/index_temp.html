@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="refresh" content="60">
+  <link rel="shortcut icon" href="static/favicon.ico">
+  
+  <div class="cr cr-top cr-left cr-sticky cr-green">
+    <title>WAZN Faucet</title>
+  </div>
+
+  <script type="text/javascript" src="../../../code.jquery.com/jquery.js"></script>
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="static/css/layout.css">
+  <link rel="stylesheet" href="static/css/custom.css">
+  <link rel="stylesheet" href="static/fonts/fonts.css">
+
+  <style type="text/css">
+    header, section, footer, aside, nav, article, figure, audio, video, canvas  { display:block; }
+  </style>
+</head>
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <div class="layout">
+    <div class="layout__header">
+
+      <h1 class="centered header">WAZN Faucet</h1>
+
+
+
+
+    </div>
+    <div class="layout__content">
+      <div class="container" id="wrapper">
+        <div class="segment">
+          <div>
+            <div class="textBig bold">
+              Current balance: <span class="bold orange" id="balance">3517</span> WAZN
+            </div>
+            <div class="address">
+              <div class="form__title">Wallet address:</div>
+
+              <div class="code">
+                WaznPw2YaCNaPT2rqdtQUpTa8Hw2sRrLq72bga53eHDEfEHfMUfca2W2kFBUqQm51gexz5BNjMARLHEqGtjgLLWE2XXxyvZJDs
+              </div>
+
+            </div>
+            <fieldset class="form">
+              <div class="form__title">Get WAZN</div>
+              <div class="form__container">
+                <input class="input" id="address" name="address" placeholder="Enter WAZN address" type="text" required autofocus>
+                <button class="button" id="submit" name="submit" type="submit">
+                  Submit
+                  <div class="loader">Loading...</div>
+                </button>
+              </div>
+            </fieldset>
+            <div class="success" id="success"></div>
+            <div class="error" id="error"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layout__footer">
+      <div class="layout__footer footer">
+        <footer class="container footer__container">
+          <div class="footer__left">
+            <h3 class="footer__title"></h3>
+            <a class="footer__link"></a>
+          </div>
+          <div class="footer__right">
+            <section>
+              <h3 class="footer__title"></h3>
+            </section>
+          </div>
+        </footer>
+        <div class="centered">
+          <div class="small" style="padding: 10px;">
+            <p><a class="footer__link" href="https://github.com/project-wazn/wazn-faucet" target="_blank">Source Code</a> | Faucet version: v1.0.0 | WAZN version: v1.1.0</p>
+            <p>Copyright © 2019 <a class="footer__link"<a href="https://wazn.io" target="_blank">WAZN Project</a></p>
+          </div>
+        </div>
+     </div>
+   </div>
+  <script>
+      $(document).ready(function(){
+
+        function get_balance(){
+          $.ajax({
+
+              url: "./transactions/",
+
+            cache: false,
+            success: function(data){
+              $("#balance").html(data.balance);
+            },
+            fail: function(jqXHR, textStatus, errorThrown) {
+              $("#balance").html('WAZN');
+            }
+          });
+        };
+        get_balance(); // This will run on page load
+
+        $("#submit").click(function() {
+          var destination_address = $("#address").val();
+          $("#submit").addClass('loading');
+          var request = $.ajax({
+
+              url: "./transactions/",
+
+            type: "POST",
+            data: JSON.stringify({"destination_address" : destination_address}),
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json"
+          });
+
+          request.success(function(data) {
+            $("#submit").removeClass('loading');
+            $("#success").html('<div>' +
+              '<div class="amount">Amount sent: ' + data.amount + ' WAZN</div>' +
+              '<div>Transaction ID: ' + data.transaction_id + '</div>' +
+            '</div>');
+            $("#error").html('');
+          });
+
+          request.fail(function(jqXHR, textStatus, errorThrown) {
+            $("#submit").removeClass('loading');
+            $("#success").html('');
+            if (jqXHR.responseJSON == undefined) {
+                $("#error").html( textStatus + " (" + errorThrown + ")");
+            }
+            else {
+              var error = JSON.parse(jqXHR.responseText);
+              var errorString = '';
+              if (typeof error === 'object') {
+                Object.keys(error).forEach(function(key) {
+                  if (Array.isArray(error[key])) {
+                    errorString = errorString + ' ' + error[key].join(' ');
+                  } else {
+                    errorString = errorString + ' ' + error[key];
+                  }
+              });
+              } else {
+                errorString = textStatus + " (" + errorThrown + ") " + jqXHR.responseText;
+              }
+
+              $("#error").html(errorString);
+            }
+          });
+        });
+
+    });
+  </script>
+</body>
+</html>

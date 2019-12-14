@@ -6,7 +6,7 @@
   <meta http-equiv="refresh" content="60">
   {% if wazn_network %}
   <div class="cr cr-top cr-left cr-sticky cr-green">
-    <title>Monero {{ wazn_network|safe }} faucet</title>
+    <title>WAZN {{ wazn_network|safe }} Faucet</title>
   </div>
   {% endif %}
   <script type="text/javascript" src="https://code.jquery.com/jquery.js"></script>
@@ -29,11 +29,9 @@
   <div class="layout">
     <div class="layout__header">
       {% if wazn_network %}
-      <h1 class="centered header">Monero {{ wazn_network|safe }} faucet</h1>
+      <h1 class="centered header">WAZN {{ wazn_network|safe }} Faucet</h1>
       {% endif %}
       {% if wazn_network %}
-        <div class="centered footer__link">
-          <a href="https://community.xmr.to/faucet/{{ wazn_network_other|safe }}/" target="_blank">Go to {{ wazn_network_other|safe }} faucet</a>
         </div>
       {% endif %}
     </div>
@@ -42,7 +40,7 @@
         <div class="segment">
           <div>
             <div class="textBig bold">
-              Current balance: <span class="bold orange" id="balance"></span> XMR
+              Current balance: <span class="bold orange" id="balance"></span> WAZN
             </div>
             <div class="address">
               <div class="form__title">Wallet address:</div>
@@ -53,9 +51,9 @@
               {% endif %}
             </div>
             <fieldset class="form">
-              <div class="form__title">Get XMR</div>
+              <div class="form__title">Get WAZN</div>
               <div class="form__container">
-                <input class="input" id="address" name="address" placeholder="Enter monero address" type="text" required autofocus>
+                <input class="input" id="address" name="address" placeholder="Enter WAZN address" type="text" required autofocus>
                 <button class="button" id="submit" name="submit" type="submit">
                   Submit
                   <div class="loader">Loading...</div>
@@ -68,7 +66,27 @@
         </div>
       </div>
     </div>
+    <div class="layout__footer">
+      <div class="layout__footer footer">
+        <footer class="container footer__container">
+          <div class="footer__left">
+            <h3 class="footer__title"></h3>
+            <a class="footer__link"></a>
   </div>
+          <div class="footer__right">
+            <section>
+              <h3 class="footer__title"></h3>
+            </section>
+          </div>
+        </footer>
+        <div class="centered">
+          <div class="small" style="padding: 10px;">
+            <p><a class="footer__link" href="https://github.com/project-wazn/wazn-faucet" target="_blank">Source Code</a> | Faucet version: v1.0.0 | WAZN version: v1.1.0</p>
+            <p>Copyright © 2019 <a class="footer__link"<a href="https://wazn.io" target="_blank">WAZN Project</a></p>
+          </div>
+        </div>
+     </div>
+   </div>
   <script>
       $(document).ready(function(){
 
@@ -82,7 +100,7 @@
               $("#balance").html(data.balance);
             },
             fail: function(jqXHR, textStatus, errorThrown) {
-              $("#balance").html('XMR');
+              $("#balance").html('WAZN');
             }
           });
         };
@@ -104,7 +122,7 @@
           request.success(function(data) {
             $("#submit").removeClass('loading');
             $("#success").html('<div>' +
-              '<div class="amount">Amount sent: ' + data.amount + ' XMR</div>' +
+              '<div class="amount">Amount sent: ' + data.amount + ' WAZN</div>' +
               '<div>Transaction ID: ' + data.transaction_id + '</div>' +
             '</div>');
             $("#error").html('');
